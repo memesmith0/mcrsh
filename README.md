@@ -17,10 +17,7 @@ mcrsh ;
 #mcrsh_c=0
 #mcr_macros=""
 
-#mcr() {
-#  mcr_macros="${mcr_macros}${mcr_macros:+:}$(printf "%s" "$1" | awk '{gsub(":","\\\\:");gsub("\n","\\\\n");print}')"
-#  mcrsh_c="$((mcrsh_c + 1))"
-#}
+#mcr() { mcr_macros=":$(printf "%s" "$1" | awk '{gsub(":","\\\\:");gsub("\n","\\\\n");print}')" ; mcrsh_c="$((mcrsh_c + 1))" ; } ;
 #
 #mcrsh() {
 #  while read -r mcrsh_code_line; do
