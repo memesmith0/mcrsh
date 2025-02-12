@@ -15,11 +15,16 @@ mcr(){ while read -r i; do eval "$( printf "%s" "$i" | awk "$1" ; )" ; done ; } 
 mcrsh(){ while read -r i; do eval "$i"; done ; } &&
 mcrsh ; 
 
-#new mcrsh code
+#new mcrsh
+#p(){
+#
+#    printf "%s" "$1"
+#    
+#}
+#pa(){ p "$1" | awk -v n="$mcrsh_i" "$2" ; };
 #mcrsh_c=0
-#mcr() { mcrsh_m=":$(printf "%s" "$1" | awk '{gsub(":","\\:");gsub("\n","\\\\n");print}')" ; mcrsh_c="$((mcrsh_c + 1))" ; } ;
-#mcrsh(){ while read -r mcrsh_l; do mcrsh_e="$mcrsh_l"; mcrsh_i=0; while [ "$mcrsh_i" -lt "$mcrsh_c" ]; do mcrsh_i="$((mcrsh_i + 1))" ;
-#mcrsh_e="$(printf "$mcrsh_e" | awk "$( printf "%s" "$mcrsh_m" | awk -v n="$mcrsh_i" '{for(i=0;i<length($0);i++){c=substr($0,i+1,1);if(c==":"&&l!="\\"){g++}else if(g==n){printf "%s",c}l=c}}' | awk '{gsub("\\:",":");gsub("\\\\n","\n");print}' )" )" ; 
-#done; eval "$mcrsh_e"; done ; } ;
+#mcr() { mcrsh_m="$mcrsh_m:$(pa "$1" '{gsub(":","\\:");gsub("\n","\\\\n");print}')" ; mcrsh_c="$((mcrsh_c + 1))" ; } ;
+#mcrsh(){ while read -r mcrsh_l; do mcrsh_e="$mcrsh_l"; if [ "$mcrsh_c" -gt "0" ] ; then mcrsh_i=1; while [ "$mcrsh_i" -le "$mcrsh_c" ]; do 
+#								      mcrsh_e="$(pa "$mcrsh_e" "$(pa "$mcrsh_m" '{for(;i<length($0);i++){c=substr($0,i+1,1);if(c==":"&&l !="\\"){g++}else if(g==n){printf "%s",c}l=c}}' | awk '{gsub("\\:",":");gsub("\\\\n","\n");print}'P)" )" ; mcrsh_i="$((mcrsh_i + 1))" ; 
+#done; fi; eval "$mcrsh_e"; done ; } ;
 #mcrsh 
-
