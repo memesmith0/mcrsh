@@ -14,23 +14,17 @@
 mcr(){ while read -r i; do eval "$( printf "%s" "$i" | awk "$1" ; )" ; done ; } &&
 mcrsh(){ while read -r i; do eval "$i"; done ; } &&
 mcrsh ;
-#mcrsh_c=0
-#mcr_macros=""
 
-#mcr() { mcr_macros=":$(printf "%s" "$1" | awk '{gsub(":","\\\\:");gsub("\n","\\\\n");print}')" ; mcrsh_c="$((mcrsh_c + 1))" ; } ;
+#new mcrsh code
+#mcrsh_c=0
+#mcrsh_macros=""
 #
-#mcrsh() {
-#  while read -r mcrsh_code_line; do
-#    for mcrsh_current_macro in $(seq 1 "$mcrsh_c"); do
-#      mcrsh_encoded_macro=$(printf "%s" "$mcr_macros" | awk '{gsub("\\\\:",":"); print}' | awk -v g="$mcrsh_current_macro" '{if(NR==g){print $0;exit}}')
-#      if [ -n "$mcrsh_encoded_macro" ]; then
-#        decoded_macro=$(printf "%s" "$mcrsh_encoded_macro" | awk '{gsub("\\\\:",":");gsub("\\\\n","\n");print}')
-#        mcrsh_code_line=$(echo "$mcrsh_code_line" | sed "s/\$${mcrsh_current_macro}/$decoded_macro/g")
-#      fi
-#    done
-#    eval "$mcrsh_code_line"
-#  done
-#}
-
+#mcr() { mcrsh_macros=":$(printf "%s" "$1" | awk '{gsub(":","\\\\:");gsub("\n","\\\\n");print}')" ; mcrsh_c="$((mcrsh_c + 1))" ; } ;
+#
+#mcrsh_get{ code_that_gets_value_from_mcrsh_macros ; }
+#
+#mcrsh(){ while read -r mcrsh_code_line; do for mcrsh_current_macro in $(seq 1 "$mcrsh_c"); do
+#mcrsh_decoded_macro="$( printf "%s" "$(printf "%s" "$decoded_macro" | awk "$(mcrsh_get "$mcrsh_dewcoded__macro" )" )" | awk '{gsub("\\\\:",":");gsub("\\\\n","\n");print}' )" ;
+#    done; eval "$mcrsh_code_line"; done ; } ;
 #mcrsh
-#mcrsh_c=0
+
