@@ -13,18 +13,13 @@
 #old mcrsh
 mcr(){ while read -r i; do eval "$( printf "%s" "$i" | awk "$1" ; )" ; done ; } &&
 mcrsh(){ while read -r i; do eval "$i"; done ; } &&
-mcrsh ;
+mcrsh ; 
 
 #new mcrsh code
-#mcrsh_c=0
-#mcrsh_macros=""
-#
-#mcr() { mcrsh_macros=":$(printf "%s" "$1" | awk '{gsub(":","\\\\:");gsub("\n","\\\\n");print}')" ; mcrsh_c="$((mcrsh_c + 1))" ; } ;
-#
-#mcrsh_get{ code_that_gets_value_from_mcrsh_macros ; }
-#
+#mcr() { mcrsh_macros=":$(printf "%s" "$1" | awk '{gsub(":","\\:");gsub("\n","\\\\n");print}')" ; mcrsh_c="$((mcrsh_c + 1))" ; } ;
+#mcrsh_get(){ printf "%s" "$mcrsh_macros" | awk -v n="$1" '{for(i=0;i<length($0);i++){c=substr($0,i+1,1)if(c==":" && last !="\\"){g++}else if(g==n){printf "%s", c}last=c}}' ; } ;
 #mcrsh(){ while read -r mcrsh_code_line; do for mcrsh_current_macro in $(seq 1 "$mcrsh_c"); do
-#mcrsh_decoded_macro="$( printf "%s" "$(printf "%s" "$decoded_macro" | awk "$(mcrsh_get "$mcrsh_dewcoded__macro" )" )" | awk '{gsub("\\\\:",":");gsub("\\\\n","\n");print}' )" ;
+#mcrsh_decoded_macro="$( printf "%s" "$(printf "%s" "$decoded_macro" | awk "$(mcrsh_get "$mcrsh_decoded_macro" )" )" | awk '{gsub("\\:",":");gsub("\\\\n","\n");print}' )" ;
 #    done; eval "$mcrsh_code_line"; done ; } ;
 #mcrsh
 
